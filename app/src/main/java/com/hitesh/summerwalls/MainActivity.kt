@@ -3,6 +3,7 @@ package com.hitesh.summerwalls
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hitesh.summerwalls.adapter.WallAdapter
 import com.hitesh.summerwalls.repository.WallsData
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         val wallItemsList = wallsData?.inputWallUrls(wallsData!!.wallArrayLenght)
         walls_adapter.adapter = WallAdapter(wallItemsList!!)
-        walls_adapter.layoutManager = LinearLayoutManager(this)
+        walls_adapter.layoutManager = GridLayoutManager(applicationContext, 2)
         walls_adapter.setHasFixedSize(true)
 
     }
