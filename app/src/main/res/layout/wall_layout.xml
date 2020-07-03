@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content">
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
 
     <ImageView
         android:layout_width="match_parent"
@@ -10,14 +13,15 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/wallpaper"
-        android:background="@color/colorAccent">
+        android:layout_gravity="bottom"
+        android:background="#ffffff">
+
         <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView"
-            android:text="Item1"
-            />
+            android:textColor="#000000"
+            android:text="Item1" />
     </FrameLayout>
 
-</RelativeLayout>
+</androidx.cardview.widget.CardView>
