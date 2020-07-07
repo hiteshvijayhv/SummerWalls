@@ -6,10 +6,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.hitesh.summerwalls.R
 import com.hitesh.summerwalls.WallViewItems
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.wall_layout.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 
 class WallAdapter(private val wallViewItems: List<WallViewItems>) :
@@ -26,13 +31,11 @@ class WallAdapter(private val wallViewItems: List<WallViewItems>) :
            .inflate(R.layout.wall_layout, parent, false)
         return WallViewHolder(itemView)
     }
-
     override fun onBindViewHolder(holder: WallAdapter.WallViewHolder, position: Int) {
         val currentItem = wallViewItems[position]
         holder.textView.text = currentItem.text
 
-        Picasso.get().load(currentItem.imageUrl)
-            .into(holder.imageView)
+        holder.imageView.load(currentItem.imageUrl)
     }
 
     override fun getItemCount(): Int {
