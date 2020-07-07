@@ -16,11 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        wallsData = ViewModelProvider(
-            this,
-            ViewModelProvider
-                .AndroidViewModelFactory(application))
-            .get(WallsData::class.java)
+        wallsData = WallsData()
 
 
         val wallItemsList = wallsData?.inputWallUrls(wallsData!!.wallArrayLenght)

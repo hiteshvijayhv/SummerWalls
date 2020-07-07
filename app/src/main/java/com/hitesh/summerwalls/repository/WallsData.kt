@@ -3,7 +3,7 @@ package com.hitesh.summerwalls.repository
 import androidx.lifecycle.ViewModel
 import com.hitesh.summerwalls.WallViewItems
 
-class WallsData: ViewModel() {
+class WallsData{
 
     var wallURL = arrayOf(
         "https://user-images.githubusercontent.com/46933160/85002367-6e1cf100-b172-11ea-9cd6-e5ff1a5fcce5.jpg",
