@@ -10,14 +10,12 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.hitesh.summerwalls.adapter.WallAdapter
-import com.hitesh.summerwalls.repository.WallsData
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
 
 class MainActivity : AppCompatActivity() {
 
-    var wallsData: WallsData? = null
     var requestQueue: RequestQueue? = null
     var jsonUrl = "https://gist.githubusercontent.com/hiteshhv/38dfff56a782089471e5ada9a7a2bb7f/raw/a9234b2eacc4aafb9b9b20bc1a434fadb8220a51/walls.json"
 
