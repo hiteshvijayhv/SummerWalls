@@ -17,8 +17,7 @@ import org.json.JSONObject
 class MainActivity : AppCompatActivity() {
 
     var requestQueue: RequestQueue? = null
-    var jsonUrl = "https://gist.githubusercontent.com/hiteshhv/38dfff56a782089471e5ada9a7a2bb7f/raw/a9234b2eacc4aafb9b9b20bc1a434fadb8220a51/walls.json"
-
+    var jsonUrl = "https://gist.githubusercontent.com/hiteshhv/38dfff56a782089471e5ada9a7a2bb7f/raw/0a198f101f9c5f7e90ccae7d3a45455dfd511685/walls.json"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
