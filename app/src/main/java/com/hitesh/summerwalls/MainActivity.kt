@@ -27,26 +27,13 @@ class MainActivity : AppCompatActivity() {
 
         requestQueue = Volley.newRequestQueue(this)
 
-        var list: List<WallViewItems>? = null
-        CoroutineScope(IO).launch {
-            var json = async { list = loadJson() }.await()
-            delay(1000)
-            var load = async { loadRecyclerView(list!!) }
-            load.join()
-        }
+        parseJson()
     }
 
-     fun loadJson(): List<WallViewItems> {
-            val wallItemsList = parseJson()
-            return wallItemsList
-    }
-
-    suspend fun loadRecyclerView(list: List<WallViewItems>){
-        withContext(Main){
+     fun loadRecyclerView(list: List<WallViewItems>){
             walls_adapter.adapter = WallAdapter(list!!)
             walls_adapter.layoutManager = GridLayoutManager(applicationContext, 2)
             walls_adapter.setHasFixedSize(true)
-        }
     }
 
     fun parseJson(): List<WallViewItems>{
@@ -61,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                     val url = employee.getString("url")
                     val jsonItem = WallViewItems(title, url)
                     jsonList += jsonItem
-                    //Toast.makeText(applicationContext, "$title and $url", Toast.LENGTH_SHORT).show()
+                    loadRecyclerView(jsonList)
                 }
             },
             Response.ErrorListener { error ->
