@@ -11,23 +11,42 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.hitesh.summerwalls.adapter.WallAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import org.json.JSONObject
 
 
 class MainActivity : AppCompatActivity() {
 
     var requestQueue: RequestQueue? = null
-    var jsonUrl = "https://gist.githubusercontent.com/hiteshhv/38dfff56a782089471e5ada9a7a2bb7f/raw/0a198f101f9c5f7e90ccae7d3a45455dfd511685/walls.json"
+    var jsonUrl = "https://gist.githubusercontent.com/hiteshhv/38dfff56a782089471e5ada9a7a2bb7f/raw/1517e81b4f40a0a15949e1788ff6913fc8e87dfa/walls.json"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         requestQueue = Volley.newRequestQueue(this)
 
-        val wallItemsList = parseJson()
-        walls_adapter.adapter = WallAdapter(wallItemsList!!)
-        walls_adapter.layoutManager = GridLayoutManager(applicationContext, 2)
-        walls_adapter.setHasFixedSize(true)
+        var list: List<WallViewItems>? = null
+        CoroutineScope(IO).launch {
+            var json = async { list = loadJson() }.await()
+            delay(1000)
+            var load = async { loadRecyclerView(list!!) }
+            load.join()
+        }
+    }
+
+     fun loadJson(): List<WallViewItems> {
+            val wallItemsList = parseJson()
+            return wallItemsList
+    }
+
+    suspend fun loadRecyclerView(list: List<WallViewItems>){
+        withContext(Main){
+            walls_adapter.adapter = WallAdapter(list!!)
+            walls_adapter.layoutManager = GridLayoutManager(applicationContext, 2)
+            walls_adapter.setHasFixedSize(true)
+        }
     }
 
     fun parseJson(): List<WallViewItems>{
@@ -42,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                     val url = employee.getString("url")
                     val jsonItem = WallViewItems(title, url)
                     jsonList += jsonItem
-                    Toast.makeText(applicationContext, "$title and $url", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(applicationContext, "$title and $url", Toast.LENGTH_SHORT).show()
                 }
             },
             Response.ErrorListener { error ->
