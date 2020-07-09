@@ -17,9 +17,10 @@ import kotlinx.coroutines.Dispatchers.Main
 import org.json.JSONObject
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), WallAdapter.OnItemClickListener {
 
     var requestQueue: RequestQueue? = null
+    val jsonList = ArrayList<WallViewItems>()
     var jsonUrl = "https://gist.githubusercontent.com/hiteshhv/38dfff56a782089471e5ada9a7a2bb7f/raw/1517e81b4f40a0a15949e1788ff6913fc8e87dfa/walls.json"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,13 +32,22 @@ class MainActivity : AppCompatActivity() {
     }
 
      fun loadRecyclerView(list: List<WallViewItems>){
-            walls_adapter.adapter = WallAdapter(list!!)
+            walls_adapter.adapter = WallAdapter(list!!, this)
             walls_adapter.layoutManager = GridLayoutManager(applicationContext, 2)
             walls_adapter.setHasFixedSize(true)
     }
 
+    override fun onItemClick(position: Int) {
+        var imageText = jsonList.get(position).text
+        var imageUrl = jsonList.get(position).imageUrl
+
+        val bundle = Bundle()
+        bundle.putString(imageText, "ImageText")
+        bundle.putString(imageUrl, "imageUrl")
+
+    }
+
     fun parseJson(): List<WallViewItems>{
-        val jsonList = ArrayList<WallViewItems>()
         var jsonObjectRequest = JsonObjectRequest(Request.Method.GET, jsonUrl, null,
             Response.Listener { response ->
 
@@ -56,4 +66,5 @@ class MainActivity : AppCompatActivity() {
         requestQueue?.add(jsonObjectRequest)
         return  jsonList
     }
+
 }

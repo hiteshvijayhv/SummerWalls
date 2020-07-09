@@ -17,13 +17,28 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 
-class WallAdapter(private val wallViewItems: List<WallViewItems>) :
+class WallAdapter(private val wallViewItems: List<WallViewItems>,
+                  private val listener: OnItemClickListener) :
     RecyclerView.Adapter<WallAdapter.WallViewHolder>(){
 
-    inner class WallViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class WallViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
         val textView: TextView = itemView.textView
         var imageView = itemView.wallpaper
 
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val position: Int = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(position)
+            }
+        }
+    }
+
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WallAdapter.WallViewHolder {
        val itemView = LayoutInflater
