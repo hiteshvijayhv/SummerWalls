@@ -1,5 +1,6 @@
 package com.hitesh.summerwalls
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -41,10 +42,10 @@ class MainActivity : AppCompatActivity(), WallAdapter.OnItemClickListener {
         var imageText = jsonList.get(position).text
         var imageUrl = jsonList.get(position).imageUrl
 
-        val bundle = Bundle()
-        bundle.putString(imageText, "ImageText")
-        bundle.putString(imageUrl, "imageUrl")
-
+        val detailIntent = Intent(this, DetailActivity::class.java)
+        detailIntent.putExtra("imageText", imageText)
+        detailIntent.putExtra("imageUrl", imageUrl)
+        startActivity(detailIntent)
     }
 
     fun parseJson(): List<WallViewItems>{
