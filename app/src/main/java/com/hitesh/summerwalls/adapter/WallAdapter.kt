@@ -50,7 +50,8 @@ class WallAdapter(private val wallViewItems: List<WallViewItems>,
         val currentItem = wallViewItems[position]
         holder.textView.text = currentItem.text
 
-        holder.imageView.load(currentItem.imageUrl)
+        //holder.imageView.load(currentItem.imageUrl)
+        Picasso.get().load(currentItem.imageUrl).resize(144, 256).into(holder.imageView)
     }
 
     override fun getItemCount(): Int {
